@@ -181,14 +181,26 @@ class Tut4 {
             Vec3(0.0, 1.0, 0.0),
         )
         val model = Mat4(1.0f)
-        val mvp = projection * view * model
 
         val matrixId = glGetUniformLocation(programId, "MVP")
         glUseProgram(programId)
-        glUniformMatrix4fv(matrixId, false, mvp.toFa_())
 
         do {
+            val currentTime = glfwGetTime()
+
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+
+            if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
+                for (i in 1..gColorBufferData.size) {
+                    gColorBufferData[i - 1] = getrandom()
+                }
+
+                glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+                glBufferData(GL_ARRAY_BUFFER, gColorBufferData, GL_STATIC_DRAW);
+            }
+
+            val mvp = projection * view * model.rotateY(Math.toRadians(Math.cos(currentTime)))
+            glUniformMatrix4fv(matrixId, false, mvp.toFa_())
 
             glEnableVertexAttribArray(0)
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer)
@@ -225,5 +237,7 @@ class Tut4 {
 
         glfwTerminate()
     }
+
+    private fun getrandom(): Float = Math.random().toFloat()
 }
 

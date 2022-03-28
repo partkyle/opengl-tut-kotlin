@@ -1,3 +1,3 @@
 fun main() {
-    Platform().run()
+    Tut4().run()
 }
