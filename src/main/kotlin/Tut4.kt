@@ -170,8 +170,8 @@ class Tut4 {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer)
         glBufferData(GL_ARRAY_BUFFER, gVertexBufferData, GL_STATIC_DRAW)
 
-        val colorbuffer = glGenBuffers()
-        glBindBuffer(GL_ARRAY_BUFFER, colorbuffer)
+        val colorBuffer = glGenBuffers()
+        glBindBuffer(GL_ARRAY_BUFFER, colorBuffer)
         glBufferData(GL_ARRAY_BUFFER, gColorBufferData, GL_STATIC_DRAW)
 
         val projection = Mat4().perspective(Math.toRadians(45.0).toFloat(), width / height.toFloat(), 0.1f, 100.0f)
@@ -202,7 +202,7 @@ class Tut4 {
             )
 
             glEnableVertexAttribArray(1)
-            glBindBuffer(GL_ARRAY_BUFFER, colorbuffer)
+            glBindBuffer(GL_ARRAY_BUFFER, colorBuffer)
             glVertexAttribPointer(
                 1,
                 3,

@@ -16,7 +16,7 @@ class Platform {
 
     private var window: Long = 0
 
-    val width = 1024
+    private val width = 1024
     val height = 768
 
     private val shader = """
@@ -100,7 +100,6 @@ class Platform {
     )
 
     private val color_data = floatArrayOf(
-
         0.583f, 0.771f, 0.014f,
         0.609f, 0.115f, 0.436f,
         0.327f, 0.483f, 0.844f,
@@ -164,6 +163,23 @@ class Platform {
             throw RuntimeException("failed to create GLFW window")
         }
 
+//        centerWindow()
+
+        // Make the OpenGL context current
+        glfwMakeContextCurrent(window)
+
+        GL.createCapabilities()
+
+        glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE)
+
+        // Enable v-sync
+//        glfwSwapInterval(1)
+
+        // Make the window visible
+//        glfwShowWindow(window)
+    }
+
+    private fun centerWindow() {
         stackPush().use { stack ->
             val pWidth = stack.mallocInt(1) // int*
             val pHeight = stack.mallocInt(1) // int*
@@ -181,25 +197,15 @@ class Platform {
                 (vidmode.height() - pHeight[0]) / 2
             )
         }
-
-        // Make the OpenGL context current
-        glfwMakeContextCurrent(window)
-        // Enable v-sync
-        glfwSwapInterval(1)
-
-        // Make the window visible
-        glfwShowWindow(window)
-
-        GL.createCapabilities()
     }
 
     fun loop() {
         glClearColor(0f, 0.0f, 1.0f, 0.0f)
 
+        val programId = shaders.loadShaders(shader, fragment)
+
         val vertexArrayId = glGenVertexArrays()
         glBindVertexArray(vertexArrayId)
-
-        val programId = shaders.loadShaders(shader, fragment)
 
         val vertexBuffer = glGenBuffers()
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer)
@@ -218,14 +224,17 @@ class Platform {
         )
         val model = Mat4(1.0f)
 
-        val matrix = glGetUniformLocation(programId, "MVP")
+        val matrixId = glGetUniformLocation(programId, "MVP")
+
+
+        glUseProgram(programId)
+
 
         while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window)) {
             glClear(GL_COLOR_BUFFER_BIT)
 
-            glUseProgram(programId)
             val mvp = projection * view * model
-            glUniformMatrix4fv(matrix, false, mvp.toFa_())
+            glUniformMatrix4fv(matrixId, false, mvp.toFa_())
 
             glEnableVertexAttribArray(0)
             glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer)
@@ -249,7 +258,7 @@ class Platform {
                 0
             )
 
-            glDrawArrays(GL_TRIANGLES, 0, 12 * 3)
+            glDrawArrays(GL_TRIANGLES, 0, vertex_buffer_data.size)
 
             glDisableVertexAttribArray(0)
             glDisableVertexAttribArray(1)
