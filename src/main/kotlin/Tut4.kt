@@ -185,6 +185,11 @@ class Tut4 {
         val matrixId = glGetUniformLocation(programId, "MVP")
         glUseProgram(programId)
 
+        // Enable depth test
+        glEnable(GL_DEPTH_TEST);
+        // Accept fragment if it closer to the camera than the former one
+        glDepthFunc(GL_LESS);
+
         do {
             val currentTime = glfwGetTime()
 
