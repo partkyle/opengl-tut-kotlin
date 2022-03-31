@@ -350,15 +350,15 @@ private fun Vec3.map(f: (Float) -> Float): Vec3 {
     )
 }
 
-private operator fun Vec3.minus(that: Vec3): Vec3 {
+ operator fun Vec3.minus(that: Vec3): Vec3 {
     return Vec3(this.x - that.x, this.y - that.y, this.z - that.z)
 }
 
-private operator fun Vec3.plus(that: Vec3): Vec3 {
+ operator fun Vec3.plus(that: Vec3): Vec3 {
     return Vec3(this.x + that.x, this.y + that.y, this.z + that.z)
 }
 
-private operator fun Vec3.times(scalar: Float): Vec3 {
+ operator fun Vec3.times(scalar: Float): Vec3 {
     return Vec3(this.x * scalar, this.y * scalar, this.z * scalar)
 }
 

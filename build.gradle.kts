@@ -10,7 +10,7 @@ plugins {
 }
 
 val lwjglVersion = "3.0.0"
-val jupiterVersion = "5.8.1"
+val jupiterVersion = "5.8.2"
 val glmVersion = "1.0.1"
 
 dependencies {
@@ -23,4 +23,8 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
