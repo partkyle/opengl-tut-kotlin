@@ -61,7 +61,7 @@ class Tut7 {
     """.trimIndent()
 
     // position
-    var position = Vec3(0.0f, 0.0f, 5.0f);
+    var position = Vec3(0.0f, 0.0f, 5.0f)
 
     // horizontal angle : toward -Z
     var horizontalAngle = 3.14f
@@ -71,7 +71,7 @@ class Tut7 {
 
     // Initial Field of View
     val initialFoV = 45.0f
-    val speed = 3.0f; // 3 units / second
+    val speed = 3.0f // 3 units / second
     val mouseSpeed = 0.5f
 
 
@@ -159,9 +159,12 @@ class Tut7 {
             val up = right.cross_(direction)
 
             if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
-                width = 2560
-                height = 1440
-                glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, width, height, 120)
+                val monitor = glfwGetPrimaryMonitor()
+                val videoMode = glfwGetVideoMode(monitor)
+                width = videoMode.width()
+                height = videoMode.height()
+                glfwSetWindowMonitor(window, monitor, 0, 0, width, height, GLFW_DONT_CARE)
+                glViewport(0,0, width, height)
             }
 
             if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
