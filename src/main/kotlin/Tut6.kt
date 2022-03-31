@@ -60,7 +60,7 @@ class Tut6 {
     """.trimIndent()
 
 
-    val gVertexBufferData = floatArrayOf(
+    private val gVertexBufferData = floatArrayOf(
         -1.0f, -1.0f, -1.0f, // triangle 1 : begin
         -1.0f, -1.0f, 1.0f,
         -1.0f, 1.0f, 1.0f, // triangle 1 : end
@@ -99,7 +99,7 @@ class Tut6 {
         1.0f, -1.0f, 1.0f
     )
 
-    var gColorBufferData = floatArrayOf(
+    private var gColorBufferData = floatArrayOf(
         0.583f, 0.771f, 0.014f,
         0.609f, 0.115f, 0.436f,
         0.327f, 0.483f, 0.844f,
@@ -139,18 +139,18 @@ class Tut6 {
     )
 
     // position
-    var position = Vec3(0.0f, 0.0f, 5.0f);
+    private var position = Vec3(0.0f, 0.0f, 5.0f)
 
     // horizontal angle : toward -Z
-    var horizontalAngle = 3.14f
+    private var horizontalAngle = 3.14f
 
     // vertical angle : 0, look at the horizon
-    var verticalAngle = 0.0f
+    private var verticalAngle = 0.0f
 
     // Initial Field of View
-    val initialFoV = 45.0f
-    val speed = 3.0f; // 3 units / second
-    val mouseSpeed = 0.5f
+    private val initialFoV = 45.0f
+    private val speed = 5.0f // 3 units / second
+    private val mouseSpeed = 0.5f
 
 
     fun run() {
@@ -243,19 +243,19 @@ class Tut6 {
 
 
             if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-                position += direction * deltaTime * speed;
+                position += direction * deltaTime * speed
             }
             // Move backward
             if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-                position -= direction * deltaTime * speed;
+                position -= direction * deltaTime * speed
             }
             // Strafe right
             if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-                position += right * deltaTime * speed;
+                position += right * deltaTime * speed
             }
             // Strafe left
             if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-                position -= right * deltaTime * speed;
+                position -= right * deltaTime * speed
             }
 
             // space to go up
@@ -273,8 +273,8 @@ class Tut6 {
             if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
                 gColorBufferData = gColorBufferData.map { getrandom() }.toFloatArray()
 
-                glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-                glBufferData(GL_ARRAY_BUFFER, gColorBufferData, GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, colorBuffer)
+                glBufferData(GL_ARRAY_BUFFER, gColorBufferData, GL_STATIC_DRAW)
             }
 
             val projection = Mat4().perspective(fov, width / height.toFloat(), 0.1f, 100.0f)
@@ -333,8 +333,6 @@ class Tut6 {
         val y = BufferUtils.createDoubleBuffer(1)
 
         glfwGetCursorPos(window, x, y)
-        x.rewind()
-        y.rewind()
 
         val mouseX = x.get()
         val mouseY = y.get()
