@@ -1,6 +1,9 @@
 import glm.mat._4.Mat4
 import glm.vec._2.Vec2
 import glm.vec._3.Vec3
+import math.minus
+import math.plus
+import math.times
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
@@ -340,25 +343,5 @@ class Tut6 {
     }
 
     private fun getrandom(): Float = Math.random().toFloat()
-}
-
-private fun Vec3.map(f: (Float) -> Float): Vec3 {
-    return Vec3(
-        f(this.x),
-        f(this.y),
-        f(this.z),
-    )
-}
-
- operator fun Vec3.minus(that: Vec3): Vec3 {
-    return Vec3(this.x - that.x, this.y - that.y, this.z - that.z)
-}
-
- operator fun Vec3.plus(that: Vec3): Vec3 {
-    return Vec3(this.x + that.x, this.y + that.y, this.z + that.z)
-}
-
- operator fun Vec3.times(scalar: Float): Vec3 {
-    return Vec3(this.x * scalar, this.y * scalar, this.z * scalar)
 }
 
